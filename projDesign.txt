@@ -1,0 +1,23 @@
+image id = ami-0c293f3f676ec4f90
+
+
+Table - Teacher, Student, Mapping (OneToMany), Grade
+
+StudentInfo  - RDS
+StudentDetail  -- DynamoDB
+
+
+Student Login:
+1. Post :  saveStudentInfo   (Lamda) ->saving student info in RDS, Notification to Teacher on Save (SNS, SES) , Student Image stored in S3, push studentdetails into SQS
+2. Consumer :  saveStudentDetails() (EC2) - read studentDetails from Queue and save into DynamoDB.
+2. Get:    getStudent    (Lamda)
+3. Get:    getTeacher	 (Lamda)
+
+Teacher Login:
+
+1. Get : ListOfStudent (Lambda) 
+2. Get:  getStudentDetails (EC2) 
+3. Post: saveGrade to Db and pdf file to S3 bucket
+4. get : getGrade ,  
+4. get:  getPdfFile - fetch file for particular student from S3 bucket
+

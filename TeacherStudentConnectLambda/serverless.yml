@@ -1,0 +1,50 @@
+service: simple-aws-lambda
+provider:
+  name: aws
+  runtime: java8
+  profile: 
+  region: ap-south-1
+  timeout: 10 #default timeout is 6 sec
+  memorySize: 1024
+  iamRoleStatements:
+    #- Effect: 'Allow'
+    #  Action:
+    #    - 's3:*'
+    #  Resource:
+    #    - 'arn:aws:s3:::${self:custom.serverlessBucket}/*'
+    #    - !Join ['', ['arn:aws:s3:::', !Ref ServerlessDeploymentBucket, '/*']]
+    - Effect: Allow
+      Action: 
+        - 'ssm:Get*'
+      Resource:
+        - '*'
+    - Effect: Allow
+      Action: 
+        - 'ssm:List*'
+      Resource:
+        - '*'
+    - Effect: Allow
+      Action: 
+        - 'ssm:Describe*'
+      Resource:
+        - '*'
+#     - Effect: Allow
+#       Action: 
+#         - kms:Decrypt
+#       Resource:
+#         - arn:aws:ssm:ap-south-1:776024579834:key/alias/aws/ssm   
+
+custom:
+  serverlessBucket: serverless-custom-bucket
+  stage: dev
+
+package:
+  artifact: target/ServerlessAWSLambda.jar
+
+functions:  
+  simpleHttp:
+    handler: com.test.lambda.SSMParamFetchLambdaHandler
+    events:
+      - http:
+          method: GET
+          path: /getbs
