@@ -4,7 +4,7 @@ provider:
   runtime: java8
   profile: 
   region: ap-south-1
-  timeout: 10 #default timeout is 6 sec
+  timeout: 120 #default timeout is 6 sec
   memorySize: 1024
   iamRoleStatements:
     #- Effect: 'Allow'
@@ -28,23 +28,46 @@ provider:
         - 'ssm:Describe*'
       Resource:
         - '*'
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem      
+      Resource:
+        - 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.dynamodbtablename}'
 #     - Effect: Allow
 #       Action: 
 #         - kms:Decrypt
 #       Resource:
 #         - arn:aws:ssm:ap-south-1:776024579834:key/alias/aws/ssm   
 
+plugins:
+  - serverless-pseudo-parameters
+
 custom:
   serverlessBucket: serverless-custom-bucket
   stage: dev
+  dynamodbtablename: tb-teacherstudent
 
 package:
-  artifact: target/ServerlessAWSLambda.jar
+  artifact: target/TeacherStudentConnectLambda.jar
 
 functions:  
   simpleHttp:
-    handler: com.test.lambda.SSMParamFetchLambdaHandler
+    handler: com.example.lambda.GetQualificationHandler
     events:
       - http:
           method: GET
           path: /getbs
+  saveTeacher:
+    handler: com.example.lambda.SaveTeacherHandler
+    environment:
+      LAMBDA_REGION: ap-south-1
+    events:
+      - http:
+          method: POST
+          path: /saveteacher
