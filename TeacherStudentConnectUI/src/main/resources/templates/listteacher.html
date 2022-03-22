@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Add User</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" th:src="@{/js/script.js}"></script>       
+    </head>
+    <body>
+        <div class="container my-5">            
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="mb-5">List Teacher</h2>
+                </div>
+            </div>
+	         <div class="row">
+	            <ul class="nav nav-pills nav-fill">
+	  				<li class="nav-item">
+	                   <a class="nav-link" th:href="@{/showteacher}" >Add Teacher</a>
+	  				</li>
+	  				<li class="nav-item">
+					    <a class="nav-link active" th:href="@{/listteacher}">List Teacher</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" href="#">Search Student</a>
+					  </li>
+	            </ul>
+	         </div>
+        	<div class="row">
+	        	<table class="table table-striped">
+					  <thead>
+					    <tr>
+					      <th scope="col">Teacher #</th>
+					      <th scope="col">Name</th>
+					      <th scope="col">School</th>
+					      <th scope="col">List of Subjects</th>
+					      <th scope="col"></th>
+					      <th scope="col"></th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr th:each="teacher: ${teacherlist}">
+					      <th id="teacherid" scope="row" th:text="${teacher.teacherid}"></th>
+					      <td th:text="${teacher.name}"></td>
+					      <td th:text="${teacher.school}"></td>
+					      <td th:each="subject: ${teacher.subjects}" th:text="${subject}"></td>
+					      <!--<td><button type="button" class="btn btn-primary">Edit</button></td>-->
+					      <!--<td><button type="button" id="addstudentbttn"class="btn btn-success">Add Student</button></td>-->
+					      <td><a href="#" class="badge badge-primary">Edit teacher</a></td>
+					      <td><a th:href="@{/showstudent(teacherid=${teacher.teacherid})}" class="badge badge-success">Add Student</a></td>
+					    </tr>
+					  </tbody>
+	        	</table>
+        	</div>
+        </div>
+    </body>
+</html>

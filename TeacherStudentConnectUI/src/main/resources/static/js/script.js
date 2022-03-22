@@ -1,24 +1,18 @@
- $(document).ready(function () {        	
-        	$("#studentform").submit(function(event) {
-				// Prevent the form from submitting via the browser.
-				event.preventDefault();
-				ajaxPost();
-			});
+/* $(document).ready(function () {        	
+	$("#studentform").submit(function(event) {
+		// Prevent the form from submitting via the browser.
+		event.preventDefault();
+		ajaxPost();
+	});
         	
-function ajaxPost() {
-		
+	function ajaxPost() {		
 		console.log("In ajaxpost");
 		// PREPARE FORM DATA
-		var courseData = {
-			coursecode : $("#ccode").val(),
-			coursename : $("#cname").val()
-		}
 		var formData = {
+			studentRollNo : $("#studentRollNo").val(),
 			name : $("#name").val(),
 			dob : $("#dob").val(),
-			gender : $("#gender").val(),
-			school : $("#school").val(),
-			course : courseData
+			gender : $("#gender").val()			
 		}
 
 		console.log('FormData::' + formData);
@@ -47,4 +41,29 @@ function ajaxPost() {
 				console.log("ERROR: ", e);
 			}
 		});
-}});
+	}*/
+	
+	
+/*	$("#addstudentbttn").click(function(event){
+		console.log("addstudentbttn clicked");
+		event.preventDefault();
+		
+		var id = $(event.target).closest('tr').find(".teacherid").html();
+		console.log(id)
+		
+		$.ajax({
+	        type: "GET",
+	        url: "/showstudent",
+	        data: { 
+	            teacherid: $("#teacherid").val()	            
+	        },
+	        success: function(result) {
+	            console.log('ok');
+	        },
+	        error: function(result) {
+	            console.log('error');
+	        }
+   		});
+		
+	});*/
+//});

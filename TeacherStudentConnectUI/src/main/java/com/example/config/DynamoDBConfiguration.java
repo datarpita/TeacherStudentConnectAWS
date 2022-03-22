@@ -27,6 +27,11 @@ public class DynamoDBConfiguration {
     public DynamoDBMapper dynamoDBMapper() {
         return new DynamoDBMapper(buildAmazonDynamoDB());
     }
+	
+	@Bean
+    public AmazonDynamoDB amazonDynamoDB() {
+        return buildAmazonDynamoDB();
+    }
 
     private AmazonDynamoDB buildAmazonDynamoDB() {
     	String dynamoDBEndpoint = "dynamodb." + awsRegion + ".amazonaws.com";
